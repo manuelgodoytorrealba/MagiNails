@@ -1,0 +1,39 @@
+:root {
+  /* Colors */
+  --bg-primary: #FAFAFA;
+  --bg-secondary: #F2F2F2;
+  --surface-base: #FFFFFF;
+
+  --text-strong: #111111;
+  --text-primary: #1C1C1C;
+  --text-body: #2A2A2A;
+  --text-muted: #6B6B6B;
+
+  --border-subtle: #EAEAEA;
+
+  --accent-rose: #F6C1CC;
+  --accent-gold: #C9A24D;
+  --accent-whatsapp: #25D366;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --fonts-sans: 'Gabriela';
+
+  /* Spacing */
+  --space-xs: 8px;
+  --space-s: 16px;
+  --space-m: 24px;
+  --space-l: 32px;
+  --space-xl: 48px;
+  --space-xxl: 64px;
+
+  /* Radius */
+  --radius-s: 8px;
+  --radius-m: 12px;
+  --radius-l: 16px;
+
+  /* Shadow */
+  --shadow-soft: 0 8px 24px rgba(0,0,0,0.08);
+
+  /*Gradient*/
+}
