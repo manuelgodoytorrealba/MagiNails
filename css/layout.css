@@ -5,7 +5,7 @@ header {
     justify-content: space-evenly;
     border: 1px solid black;
     padding: 24px 16px;
-    
+
     background: var(--gradient-header);
 }
 
@@ -30,6 +30,11 @@ header h1 {
     gap: 30px;
     box-shadow: var(--shadow-sm);
     min-height: calc(95svh - 91px);
+    background:
+        var(--vignette-hero),
+        var(--band-hero),
+        var(--tint-hero),
+        var(--gradient-hero);
 }
 
 
@@ -37,7 +42,7 @@ header h1 {
 .hero .hero-tittle {
     font-family: var(--font-type-hero);
     font-weight: 200;
-    font-size: clamp(28px, 6vw, 44px);
+    font-size: clamp(30px, 6vw, 44px);
     margin-top: 0;
 
 }
@@ -68,4 +73,286 @@ header h1 {
     max-width: 32ch;
     line-height: 1.4;
     overflow-wrap: anywhere;
+}
+
+/*TIK TOK SECTION */
+
+.tik-tok {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding: 24px 16px 50px 16px;
+    background-color: #F2F2F2;
+    box-shadow: var(--shadow-md);
+
+}
+
+.tik-tok-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    width: 100%;
+    max-width: 1000px;
+}
+
+@media (min-width: 640px) {
+    section.tik-tok .tik-tok-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    section.tik-tok .tik-tok-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+
+.post {
+    width: 100%;
+    aspect-ratio: 4 / 7;
+    min-height: 320px;
+    /* ✅ fallback para que SIEMPRE se vea */
+    border-radius: 12px;
+    overflow: hidden;
+    /* ✅ para que el embed no se salga */
+    display: grid;
+    /* ✅ hace que el contenido llene */
+    place-items: center;
+    box-shadow: var(--shadow-md);
+    border: 1px solid black;
+}
+
+
+
+
+.post iframe,
+.post blockquote {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+}
+
+/* TIKTOK CARDS (THUMBNAILS) */
+
+.tiktok-card {
+  background: #000;
+  position: relative;
+}
+
+.tiktok-card a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.tiktok-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Overlay */
+.tiktok-overlay {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.6),
+    rgba(0,0,0,0.25)
+  );
+
+  color: #fff;
+  font-family: var(--font-type-text);
+  font-size: 14px;
+
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.tiktok-card:hover .tiktok-overlay {
+  opacity: 1;
+}
+
+.tiktok-overlay img {
+  width: 40px;
+  height: 40px;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .tiktok-overlay {
+    opacity: 1;
+    inset: auto 0 0 0;         /* solo abajo */
+    padding: 12px 10px;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+
+    background: rgba(0,0,0,0.55);
+  }
+
+  .tiktok-overlay img {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+
+
+/*REVIEWS*/
+
+
+.reviews {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 16px;
+  background: var(--gradient-header);
+}
+
+.reviews-title {
+  font-family: var(--font-type-hero);
+  font-weight: 200;
+  font-size: clamp(32px, 4vw, 36px);
+  color: var(--font-color-white);
+  margin-bottom: 40px;
+}
+
+.grid-reviews {
+  display: grid;
+  gap: 24px;
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* CARD */
+.review-card {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+
+  background: #000;
+  color: #fff;
+
+  padding: 24px;
+  border-radius: 24px;
+
+  box-shadow: var(--shadow-lg);
+}
+
+/* Avatar */
+.review-avatar {
+  width: 64px;
+  height: 64px;
+  min-width: 64px;
+
+  border-radius: 50%;
+  background: #333;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-top: 25px;
+}
+
+.review-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Content */
+.review-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.review-name {
+  font-family: var(--font-type-text);
+  font-weight: 600;
+  margin: 0;
+}
+
+.review-text {
+  font-family: var(--font-type-text);
+  font-weight: 300;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.review-rating {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+@media (min-width: 1024px) {
+    .review-avatar{
+      margin-top: 0px;
+    }
+}
+
+
+
+/*FOOTER*/
+
+/* FOOTER */
+
+.site-footer {
+  background-color: #111;
+  color: #fff;
+  padding: 32px 16px;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  text-align: center;
+}
+
+.footer-brand {
+  font-family: var(--font-type-header);
+  font-size: 20px;
+  font-weight: 200;
+}
+
+.footer-links {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-links a {
+  font-family: var(--font-type-text);
+  font-size: 14px;
+  color: #fff;
+  text-decoration: none;
+  opacity: 0.85;
+}
+
+.footer-links a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.footer-copy {
+  font-family: var(--font-type-text);
+  font-size: 12px;
+  opacity: 0.7;
 }
