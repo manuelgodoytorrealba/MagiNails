@@ -1,5 +1,11 @@
+/* =========================
+   SELECTOR (Selector · MagiNails)
+   ========================= */
+
 .selector-page {
-  min-height: 70vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
 }
 
 .selector-modal{
@@ -11,12 +17,13 @@
   position: relative;
   box-shadow: var(--shadow-lg);
 
-  height: calc(100svh - 130px); /* 88px = header aprox */
+  flex: 1;              /* 🔥 ocupa el espacio restante */
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* ✅ evita scroll feo */
-}
 
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
 
 .selector-close {
   position: absolute;
@@ -28,15 +35,36 @@
   font-weight: bold;
 }
 
+.selector-tittle{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+}
+
+.selector-tittle-h3{
+  font-family: var(--font-type-hero);
+  font-weight: 200;
+  color: var(--font-color-black);
+  margin: 0px;
+}
+
+.selector-subtittle{
+  font-family: var(--font-type-hero);
+  font-weight: 200;
+  color: var(--font-color);
+}
+
 .selector-grid{
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 18px;
-  row-gap: 30px;               /* antes 30px */
-  margin-top: 38px;        /* antes 70px */
-  margin-bottom: 0;        /* ❌ fuera ese 130px */
+  row-gap: 30px;
+  margin-top: 0px;
+  margin-bottom: 0;
 }
-
 
 .selector-card {
   border: 2px solid rgba(0,0,0,0.60);
@@ -52,18 +80,12 @@
   align-items: center;
 }
 
-
-
-
 .selector-label {
   font-family: var(--font-type-text);
   font-size: 14px;
   margin: 0 0 10px;
   text-align: center;
 }
-
-
-
 
 .selector-value {
   font-family: var(--font-type-text);
@@ -72,8 +94,31 @@
   text-align: center;
 }
 
+.selector-icon {
+  width: 120px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selector-icon img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Variantes iconos */
+.icon-zona img,
+.icon-dia img {
+  width: 180px;
+  height: auto;
+}
+
 .selector-cta {
-  margin-top: 50px;
+  /* ✅ en vez de empujar con 50px, lo pegamos al fondo del modal */
+  margin-top: auto;
+
   width: 100%;
   height: 56px;
 
@@ -94,6 +139,7 @@
 
   box-shadow: var(--shadow-md);
 }
+
 /* Icono */
 .selector-wa-icon {
   width: 30px;
@@ -101,58 +147,9 @@
 }
 
 
-
-.flow-page a.back-link {
-  text-decoration: none;
-  color: #111;
-  font-family: var(--font-type-text);
-  font-weight: 600;
-}
-
-
-
-.selector-tittle{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.selector-tittle-h3{
-  font-family: var(--font-type-hero);
-  font-weight: 200;
-  color: var(--font-color-black);
-}
-.selector-subtittle{
-   font-family: var(--font-type-hero);
-  font-weight: 200;
-  color: var(--font-color);
-}
-
-.selector-icon {
-  width: 120px;
-  height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.selector-icon img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-
-
-.icon-zona img,
-.icon-dia img {
-  width: 180px;
-  height: auto;
-}
-
-/* DESKTOP */
+/* =========================
+   DESKTOP
+   ========================= */
 @media (min-width: 1024px) {
   .selector-page {
     min-height: 100vh;
@@ -160,38 +157,45 @@
     flex-direction: column;
   }
 
-  /* Fondo “app” detrás del modal */
   body.selector-page {
     background: var(--gradient-hero);
   }
 
   .selector-modal {
-    width: min(760px, 92vw);         /* 👈 más ancho */
-    margin: 24px auto;              /* 👈 centra con aire */
-    height: auto;                   /* 👈 no fuerces altura */
-    min-height: 640px;              /* 👈 consistencia */
+    width: min(760px, 92vw);
+    margin: 24px auto;
+    height: auto;
+    max-height: none;       /* ✅ desktop sin límite */
+    min-height: 640px;
     padding: 32px 34px;
     border-radius: 22px;
+    overflow: visible;      /* ✅ desktop sin scroll interno */
   }
 
   .selector-grid {
-    column-gap: 28px;               /* 👈 mejor desktop */
+    column-gap: 28px;
     row-gap: 34px;
     margin-top: 26px;
   }
 
   .selector-cta {
-    width: min(520px, 100%);        /* 👈 botón no tan gigante */
+    width: min(520px, 100%);
     margin-left: auto;
     margin-right: auto;
   }
 }
 
 
-/* FLOW PAGES (Servicio / Zona / Día / Horario) */
+/* =========================
+   FLOW PAGES (Servicio / Zona / Día / Horario)
+   ========================= */
 
-
-
+.flow-page a.back-link {
+  text-decoration: none;
+  color: #111;
+  font-family: var(--font-type-text);
+  font-weight: 600;
+}
 
 .flow-page .back-link{
   text-decoration: none;
@@ -230,7 +234,7 @@
   padding: 14px 0px;
 
   display: grid;
-  grid-template-columns: 52px 1fr 72px; /* izquierda | centro | derecha */
+  grid-template-columns: 52px 1fr 72px;
   gap: 12px;
   align-items: center;
 
@@ -251,7 +255,6 @@
   object-fit: contain;
 }
 
-
 .arrow-left{
   width: 40px;
   height: 40px;
@@ -260,22 +263,22 @@
 
 /* CENTER */
 .service-mid{
-  min-width: 0; /* 🔑 permite que funcione ellipsis */
+  min-width: 0;
 }
 
 .service-name{
   margin: 0;
   font-family: var(--font-type-text);
   font-weight: 600;
-  font-size: 28px;       /* tamaño uniforme */
-  line-height: 1.05;     /* alinea todos perfectamente */
-  white-space: nowrap;   /* no rompe línea */
+  font-size: 28px;
+  line-height: 1.05;
+  white-space: nowrap;
   overflow: hidden;
-   /* si no cabe → ... */
 }
+
 .service-name.is-long{
-  font-size: 20px;     /* más pequeño para títulos largos */
-  white-space: nowrap; /* para que no rompa */
+  font-size: 20px;
+  white-space: nowrap;
 }
 
 .service-desc{
@@ -324,4 +327,26 @@
   font-weight: 800;
   box-shadow: var(--shadow-md);
   cursor: pointer;
+}
+
+/* iOS/Safari: evita el azul del sistema en botones/links */
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  color: inherit;                /* hereda color en iOS */
+}
+
+/* Fuerza el texto de las cards a tu color */
+.service-item,
+.service-item * {
+  color: #111;                   /* o var(--font-color-black) */
+}
+
+/* Si quieres que la descripción sea más suave */
+.service-desc,
+.service-duration {
+  color: rgba(0,0,0,0.55);
 }
