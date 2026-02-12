@@ -1,13 +1,18 @@
-/* HEADER */
 header {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    border: 1px solid black;
-    padding: 24px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  border: 1px solid black;
 
-    background: var(--gradient-header);
+  /* ✅ notch-safe */
+  padding-top: calc(24px + var(--sat));
+  padding-right: calc(16px + var(--sar));
+  padding-left: calc(16px + var(--sal));
+  padding-bottom: 24px;
+
+  background: var(--gradient-header);
 }
+
 
 header h1 {
     font-family: var(--font-type-header);
