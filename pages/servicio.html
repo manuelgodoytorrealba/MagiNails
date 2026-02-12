@@ -1,24 +1,125 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/css/base.css" />
-  <link rel="stylesheet" href="/css/components.css" />
-  <link rel="stylesheet" href="/css/layout.css" />
-  <link rel="stylesheet" href="/css/pages.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/pages.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gabriela&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script async src="https://www.tiktok.com/embed.js"></script>
+  <script src="/scripts/main.js"></script>
   <title>Servicio · MagiNails</title>
 </head>
+
 <body class="flow-page">
 
   <header>
-    <a class="back-link" href="/pages/selector.html">← Volver</a>
-    <h1>Servicio</h1>
+    <h1>MagiNails</h1>
   </header>
 
   <main class="flow-content">
-    <p>Aquí mañana irá la lista de servicios.</p>
+    <a class="back-link" href="/pages/selector.html">
+      <img class="arrow-left" src="/assets/icons/arrow-left.svg" alt="" aria-hidden="true">
+    </a>
+    <h2 class="flow-title">Selecciona un servicio</h2>
+
+    <section class="service-list">
+
+      <button class="service-item is-selected" type="button" data-value="Manicura">
+        <div class="service-left">
+          <img class="service-icon" src="/assets/icons/book-heart.svg" alt="" aria-hidden="true">
+        </div>
+
+        <div class="service-mid">
+          <h3 class="service-name">Manicura</h3>
+          <p class="service-desc">Cuidado y esmaltado básico</p>
+        </div>
+
+        <div class="service-right">
+          <img class="service-clock" src="/assets/icons/clock.svg" alt="" aria-hidden="true">
+          <span class="service-duration">Duración 1H</span>
+        </div>
+      </button>
+
+      <button class="service-item" type="button" data-value="Manicura Rubber">
+        <div class="service-left">
+          <img class="service-icon" src="/assets/icons/book-heart.svg" alt="" aria-hidden="true">
+        </div>
+
+        <div class="service-mid">
+          <h3 class="service-name is-long">Manicura Rubber</h3>
+          <p class="service-desc">Refuerzo y acabado duradero</p>
+        </div>
+
+        <div class="service-right">
+          <img class="service-clock" src="/assets/icons/clock.svg" alt="" aria-hidden="true">
+          <span class="service-duration">Duración 1H</span>
+        </div>
+      </button>
+
+      <button class="service-item" type="button" data-value="Pedicura">
+        <div class="service-left">
+          <img class="service-icon" src="/assets/icons/book-heart.svg" alt="" aria-hidden="true">
+        </div>
+
+        <div class="service-mid">
+          <h3 class="service-name">Pedicura</h3>
+          <p class="service-desc">Cuidado estético de pies</p>
+        </div>
+
+        <div class="service-right">
+          <img class="service-clock" src="/assets/icons/clock.svg" alt="" aria-hidden="true">
+          <span class="service-duration">Duración 1H</span>
+        </div>
+      </button>
+
+      <button class="service-item" type="button" data-value="Manicura + Pedicura">
+        <div class="service-left">
+          <img class="service-icon" src="/assets/icons/book-heart.svg" alt="" aria-hidden="true">
+        </div>
+
+        <div class="service-mid">
+          <h3 class="service-name is-long">Manicura + Pedicura</h3>
+          <p class="service-desc">Pack completo</p>
+        </div>
+
+        <div class="service-right">
+          <img class="service-clock" src="/assets/icons/clock.svg" alt="" aria-hidden="true">
+          <span class="service-duration">Duración 2H</span>
+        </div>
+      </button>
+
+      <button class="service-item" type="button" data-value="Diseño simple">
+        <div class="service-left">
+          <img class="service-icon" src="/assets/icons/book-heart.svg" alt="" aria-hidden="true">
+        </div>
+
+        <div class="service-mid">
+          <h3 class="service-name">Diseño simple</h3>
+          <p class="service-desc">Detalles minimalistas</p>
+        </div>
+
+        <div class="service-right">
+          <img class="service-clock" src="/assets/icons/clock.svg" alt="" aria-hidden="true">
+          <span class="service-duration">Duración 1H</span>
+        </div>
+      </button>
+
+    </section>
+
+    <button class="flow-save" type="button">Guardar</button>
+
   </main>
 
+
 </body>
+
 </html>

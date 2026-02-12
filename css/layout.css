@@ -14,6 +14,7 @@ header h1 {
     color: var(--font-color-white);
     font-weight: 200;
     margin: 0;
+    font-size: 40px;
     /* importante para que no meta espacio raro */
 }
 
@@ -295,6 +296,7 @@ header h1 {
 .review-rating {
   font-size: 14px;
   opacity: 0.8;
+  font-family: var(--font-type-header);
 }
 
 @media (min-width: 1024px) {
