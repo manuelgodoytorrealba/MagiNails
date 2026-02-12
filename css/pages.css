@@ -1,6 +1,43 @@
 /* pages.css */
-.flow-page header { display: none; }
+.flow-page header {
+  display: none;
+}
+
+.flow-page a.back-link {
+  text-decoration: none;
+  color: #111;
+  font-family: var(--font-type-text);
+  font-weight: 600;
+}
+
+.flow-content {
+  padding: 10px 16px 30px;
+  max-width: 520px;
+  margin: 0 auto;
+  display: flex;
+  /* 🔥 CLAVE */
+  flex-direction: column;
+  /* 🔥 CLAVE */
+  gap: 15px;
+}
+
 
 @media (min-width: 1024px) {
-  .flow-page header { display: flex; }
+  .flow-page header {
+    display: flex;
+  }
+
+  .flow-content {
+    margin-top: 30px;
+    background: #fff;
+    border-radius: 18px;
+    padding: 50px 50px;
+    position: relative;
+    box-shadow: var(--shadow-lg);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }

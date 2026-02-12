@@ -2,38 +2,11 @@
    FLOW PAGES (Servicio / Zona / Día / Horario)
    ========================= */
 
-header {
-    display: none;
-}
-
-.flow-page a.back-link {
-    text-decoration: none;
-    color: #111;
-    font-family: var(--font-type-text);
-    font-weight: 600;
-}
-
-.flow-page .back-link {
-    text-decoration: none;
-    color: var(--font-color-white);
-    font-family: var(--font-type-text);
-    font-weight: 600;
-}
-
-.flow-content {
-    padding: 10px 16px 30px;
-    max-width: 520px;
-    margin: 0 auto;
-
-}
-
-
-
 /* Service list */
 .service-list {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 15px;
 }
 
 /* SERVICE CARD */
@@ -66,11 +39,6 @@ header {
     object-fit: contain;
 }
 
-.arrow-left {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-}
 
 /* CENTER */
 .service-mid {
@@ -157,33 +125,6 @@ button {
 }
 
 @media(min-width: 1024px) {
-
-
-    header {
-        display: flex;
-    }
     
-    .flow-save{
-
-        margin-top: 20px;
-
-    }
-    .flow-content {
-        margin-top: 10px;
-        background: #fff;
-        border-radius: 18px;
-        padding: 22px 8px;
-        position: relative;
-        box-shadow: var(--shadow-lg);
-
-        flex: 1;
-        /* 🔥 ocupa el espacio restante */
-        display: flex;
-        flex-direction: column;
-
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
 
 }

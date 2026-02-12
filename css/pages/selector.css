@@ -9,18 +9,14 @@
 }
 
 .selector-modal{
-  width: min(420px, 92vw);
   margin: 0 auto;
   background: #fff;
   border-radius: 18px;
   padding: 22px 8px;
   position: relative;
-  box-shadow: var(--shadow-lg);
-
-  flex: 1;              /* 🔥 ocupa el espacio restante */
+  box-shadow: var(--shadow-lg);           
   display: flex;
   flex-direction: column;
-
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -67,7 +63,7 @@
 }
 
 .selector-card {
-  border: 2px solid rgba(0,0,0,0.60);
+  border: 4px solid rgba(0,0,0,0.60);
   border-radius: 12px;
   padding: 18px 14px;
   text-decoration: none;
@@ -116,22 +112,16 @@
 }
 
 .selector-cta {
-  /* ✅ en vez de empujar con 50px, lo pegamos al fondo del modal */
-  margin-top: auto;
-
+  margin-top: 20px;
   width: 100%;
   height: 56px;
-
   border-radius: 14px;
   border: none;
-
   background: #111;
   color: #fff;
-
   font-family: var(--font-type-text);
   font-weight: 700;
   font-size: 20px;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -160,22 +150,30 @@
   body.selector-page {
     background: var(--gradient-hero);
   }
+  .selector-tittle-h3{
+  font-size: 30px;
+}
+
+.selector-cta{
+  margin-top: 40px;
+}
 
   .selector-modal {
     width: min(760px, 92vw);
     margin: 24px auto;
     height: auto;
-    max-height: none;       /* ✅ desktop sin límite */
+    max-height: none;       
     min-height: 640px;
     padding: 32px 34px;
     border-radius: 22px;
-    overflow: visible;      /* ✅ desktop sin scroll interno */
+    overflow: visible;
   }
 
   .selector-grid {
     column-gap: 28px;
     row-gap: 34px;
     margin-top: 26px;
+    padding: 0px;
   }
 
   .selector-cta {
