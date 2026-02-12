@@ -1,0 +1,6 @@
+/* pages.css */
+.flow-page header { display: none; }
+
+@media (min-width: 1024px) {
+  .flow-page header { display: flex; }
+}
