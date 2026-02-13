@@ -44,47 +44,65 @@
   cursor: pointer;
 }
 
+
+
 /* SECTION TIKTOK*/
 
 #tik-tok-tittle {
   font-family: var(--font-type-hero);
   font-weight: 200;
-  color: var(--font-color-black) ;
+  color: var(--font-color-black);
   font-size: 32px;
 }
 
 /*REVIEWS*/
 
-.flow-save{
+.flow-save {
   /* Save button */
 
-    margin-top: auto;
-    width: 100%;
-    height: 56px;
-    border: none;
-    border-radius: 14px;
-    background: #111;
-    color: #fff;
-    font-family: var(--font-type-text);
-    font-size: 20px;
-    font-weight: 800;
-    box-shadow: var(--shadow-md);
-    cursor: pointer;
-    
+  margin-top: auto;
+  width: 100%;
+  height: 56px;
+  border: none;
+  border-radius: 14px;
+  background: #111;
+  color: #fff;
+  font-family: var(--font-type-text);
+  font-size: 20px;
+  font-weight: 800;
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+
 
 }
 
 
 .flow-title {
-    font-family: var(--font-type-hero);
-    font-weight: 200;
-    font-size: 30px;
-    margin: 12px 0 18px;
-    text-align: center;
+  font-family: var(--font-type-hero);
+  font-weight: 200;
+  font-size: 30px;
+  margin: 12px 0 18px;
+  text-align: center;
 }
 
-@media(min-width: 1024px){
-  .flow-save{
+@media(min-width: 1024px) {
+  .flow-save {
     font-size: 20px;
+  }
+
+  .hero div .availability-button {
+
+    font-size: 20px;
+
+    width: min(420px, 80vw);
+    height: 60px;
+
+  }
+
+  .hero div .whatsapp-button {
+    width: 60px;
+    height: 60px;
+    background-size: 60px;
+
   }
 }

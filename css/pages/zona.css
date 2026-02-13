@@ -49,8 +49,8 @@ header{
 .zone-name{
   margin: 0;
   font-family: var(--font-type-text);
-  font-weight: 800;
-  font-size: 30px;
+  font-weight: 600;
+  font-size: 28px;
   line-height: 1.05;
 }
 
