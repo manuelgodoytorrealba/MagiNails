@@ -8,13 +8,13 @@
   flex-direction: column;
 }
 
-.selector-modal{
+.selector-modal {
   margin: 0 auto;
   background: #fff;
   border-radius: 18px;
   padding: 22px 8px;
   position: relative;
-  box-shadow: var(--shadow-lg);           
+  box-shadow: var(--shadow-lg);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -31,7 +31,7 @@
   font-weight: bold;
 }
 
-.selector-tittle{
+.selector-tittle {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -40,20 +40,21 @@
 
 }
 
-.selector-tittle-h3{
+.selector-tittle-h3 {
   font-family: var(--font-type-hero);
   font-weight: 200;
   color: var(--font-color-black);
   margin: 0px;
 }
 
-.selector-subtittle{
+.selector-subtittle {
   font-family: var(--font-type-hero);
-  font-weight: 200;
+  font-weight: 100;
   color: var(--font-color);
+  opacity: 0.8;
 }
 
-.selector-grid{
+.selector-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 18px;
@@ -63,7 +64,7 @@
 }
 
 .selector-card {
-  border: 4px solid rgba(0,0,0,0.60);
+  border: 4px solid rgba(0, 0, 0, 0.60);
   border-radius: 12px;
   padding: 18px 14px;
   text-decoration: none;
@@ -150,19 +151,37 @@
   body.selector-page {
     background: var(--gradient-hero);
   }
-  .selector-tittle-h3{
-  font-size: 30px;
-}
 
-.selector-cta{
-  margin-top: 40px;
-}
+  .selector-tittle-h3 {
+    font-size: 36px;
+  }
+
+  .selector-subtittle {
+    font-size: 26px;
+  }
+
+  .selector-cta {
+    margin-top: 40px;
+  }
+
+  .selector-label {
+    font-size: 22px;
+  }
+
+  .selector-value {
+    font-size: 20px;
+  }
+
+  .selector-close {
+    top: 20px;
+    right: 26px;
+  }
 
   .selector-modal {
     width: min(760px, 92vw);
     margin: 24px auto;
     height: auto;
-    max-height: none;       
+    max-height: none;
     min-height: 640px;
     padding: 32px 34px;
     border-radius: 22px;
