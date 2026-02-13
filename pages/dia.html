@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/layout.css" />
+  <link rel="stylesheet" href="/css/pages.css" />
+  <link rel="stylesheet" href="/css/pages/dia.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gabriela&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <title>Día · MagiNails</title>
+</head>
+
+<body class="flow-page">
+  <header>
+    <h1>MagiNails</h1>
+  </header>
+
+  <main class="flow-content">
+
+    <!-- Top bar tipo app (X / Date / Clear filter) -->
+    <div class="day-topbar">
+      <a class="day-close" href="/pages/selector.html" aria-label="Cerrar"><img class="arrow-left" src="/assets/icons/arrow-left.svg" alt="" aria-hidden="true"></a>
+      <h2 class="day-topbar-title">Date</h2>
+      <button class="day-clear" type="button">Clear filter</button>
+    </div>
+
+    <!-- Weekdays -->
+    <div class="day-weekdays" aria-hidden="true">
+      <span class="is-weekend">Sun</span>
+      <span>Mon</span>
+      <span>Tue</span>
+      <span>Wed</span>
+      <span>Thu</span>
+      <span>Fri</span>
+      <span class="is-weekend">Sat</span>
+    </div>
+
+    <!-- Mes: Enero -->
+    <section class="month">
+      <h3 class="month-title">Enero 2026</h3>
+
+      <div class="month-grid">
+        <!-- Relleno “vacío” para empezar en el día correcto (ajústalo luego con JS) -->
+        <span class="day-empty"></span>
+        <span class="day-empty"></span>
+        <span class="day-empty"></span>
+        <span class="day-empty"></span>
+
+        <!-- Días -->
+        <button class="day-cell" type="button">1</button>
+        <button class="day-cell" type="button">2</button>
+        <button class="day-cell is-weekend" type="button">3</button>
+
+        <button class="day-cell is-weekend" type="button">4</button>
+        <button class="day-cell" type="button">5</button>
+        <button class="day-cell" type="button">6</button>
+        <button class="day-cell" type="button">7</button>
+        <button class="day-cell" type="button">8</button>
+        <button class="day-cell" type="button">9</button>
+        <button class="day-cell is-weekend" type="button">10</button>
+
+        <button class="day-cell is-weekend" type="button">11</button>
+        <button class="day-cell" type="button">12</button>
+        <button class="day-cell" type="button">13</button>
+        <button class="day-cell" type="button">14</button>
+        <button class="day-cell" type="button">15</button>
+        <button class="day-cell" type="button">16</button>
+        <button class="day-cell is-weekend" type="button">17</button>
+
+        <button class="day-cell is-weekend" type="button">18</button>
+        <button class="day-cell" type="button">19</button>
+        <button class="day-cell" type="button">20</button>
+        <button class="day-cell" type="button">21</button>
+        <button class="day-cell" type="button">22</button>
+        <button class="day-cell" type="button">23</button>
+        <button class="day-cell is-weekend" type="button">24</button>
+
+        <button class="day-cell is-weekend" type="button">25</button>
+        <button class="day-cell" type="button">26</button>
+        <button class="day-cell" type="button">27</button>
+        <button class="day-cell" type="button">28</button>
+
+        <!-- seleccionado como en tu diseño -->
+        <button class="day-cell is-selected" type="button" aria-pressed="true">30</button>
+
+        <button class="day-cell" type="button">31</button>
+      </div>
+    </section>
+
+    <!-- Mes: Febrero -->
+    <section class="month">
+      <h3 class="month-title">Febrero 2026</h3>
+
+      <div class="month-grid">
+        <button class="day-cell is-weekend" type="button">1</button>
+        <button class="day-cell" type="button">2</button>
+        <button class="day-cell" type="button">3</button>
+        <button class="day-cell" type="button">4</button>
+        <button class="day-cell" type="button">5</button>
+        <button class="day-cell" type="button">6</button>
+        <button class="day-cell is-weekend" type="button">7</button>
+
+        <button class="day-cell is-weekend" type="button">8</button>
+        <button class="day-cell" type="button">9</button>
+        <button class="day-cell" type="button">10</button>
+        <button class="day-cell" type="button">11</button>
+        <button class="day-cell" type="button">12</button>
+        <button class="day-cell" type="button">13</button>
+        <button class="day-cell is-weekend" type="button">14</button>
+      </div>
+    </section>
+
+  <button class="flow-save" type="button">Guardar</button>   
+  </main>
+ 
+</body>
+</html>
