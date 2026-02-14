@@ -26,58 +26,70 @@
     <h1>Maginails</h1>
   </header>
 
-  <main class="selector-modal">
+<main class="selector-modal">
 
-    <a class="selector-close" href="/index.html" aria-label="Cerrar">✕</a>
-    <div class="selector-tittle">
-      <h3 class="selector-tittle-h3">Comienza tu reserva</h3>
-      <p class="selector-subtittle">Selecciona servicio, zona y horario para consultar disponibilidad</p>
-    </div>
+  <a class="selector-close" href="/index.html" aria-label="Cerrar">✕</a>
 
-    <div class="selector-grid">
-      <a class="selector-card" href="/pages/servicio.html">
-        <p class="selector-label">Servicio</p>
+  <div class="selector-tittle">
+    <h3 class="selector-tittle-h3">Comienza tu reserva</h3>
+    <p class="selector-subtittle">Selecciona servicio, zona, día y horario para consultar disponibilidad</p>
+  </div>
 
-        <div class="selector-icon">
-          <img src="/assets/icons/service.svg" alt="Icono manicura">
-        </div>
+  <div class="selector-grid">
+    <a class="selector-card" href="/pages/servicio.html">
+      <p class="selector-label">Servicio</p>
 
-        <p class="selector-value">Manicura</p>
-      </a>
+      <div class="selector-icon">
+        <img src="/assets/icons/service.svg" alt="Icono servicio">
+      </div>
 
+      <!-- ✅ Placeholder + ID para render desde JS -->
+      <p class="selector-value" id="selector-service">Selecciona un servicio</p>
+    </a>
 
-      <a class="selector-card" href="/pages/zona.html">
-        <p class="selector-label">Zona</p>
-        <div class="selector-icon">
-          <img src="/assets/icons/zone.svg" alt="Icono manicura">
-        </div>
-        <p class="selector-value">La Piovera</p>
-      </a>
+    <a class="selector-card" href="/pages/zona.html">
+      <p class="selector-label">Zona</p>
 
-      <a class="selector-card" href="/pages/dia.html">
-        <p class="selector-label">Día</p>
-        <div class="selector-icon">
-          <img src="/assets/icons/calendar.svg" alt="Icono manicura">
-        </div>
-        <p class="selector-value">30-01-26</p>
-      </a>
+      <div class="selector-icon">
+        <img src="/assets/icons/zone.svg" alt="Icono zona">
+      </div>
 
-      <a class="selector-card" href="/pages/horario.html">
-        <p class="selector-label">Horario</p>
-        <div class="selector-icon">
-          <img src="/assets/icons/clock-pink.svg" alt="Icono manicura">
-        </div>
-        <p class="selector-value">11:00 AM</p>
-      </a>
-    </div>
-    <button class="selector-cta" type="button" disabled>
-      Consulta disponibilidad
-      <img src="/assets/icons/whatsapp.svg" alt="" class="selector-wa-icon" aria-hidden="true" />
-    </button>
+      <!-- ✅ Placeholder + ID para render desde JS -->
+      <p class="selector-value" id="selector-zone">Selecciona una zona</p>
+    </a>
 
+    <a class="selector-card" href="/pages/dia.html">
+      <p class="selector-label">Día</p>
 
-  </main>
+      <div class="selector-icon">
+        <img src="/assets/icons/calendar.svg" alt="Icono calendario">
+      </div>
 
+      <!-- ✅ Placeholder + ID para render desde JS -->
+      <p class="selector-value" id="selector-day">Selecciona un día</p>
+    </a>
+
+    <a class="selector-card" href="/pages/horario.html">
+      <p class="selector-label">Horario</p>
+
+      <div class="selector-icon">
+        <img src="/assets/icons/clock-pink.svg" alt="Icono horario">
+      </div>
+
+      <!-- ✅ Placeholder + ID para render desde JS -->
+      <p class="selector-value" id="selector-time">Selecciona un horario</p>
+    </a>
+  </div>
+
+  <!-- ✅ ID para controlar disabled/enabled desde JS -->
+  <button class="selector-cta" id="selector-cta" type="button" disabled>
+    Consulta disponibilidad
+    <img src="/assets/icons/whatsapp.svg" alt="" class="selector-wa-icon" aria-hidden="true" />
+  </button>
+
+</main>
+
+<script src="/scripts/booking.js"></script>
 </body>
 
 </html>

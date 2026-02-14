@@ -50,7 +50,7 @@
 
 /* Selected = mismo lenguaje que service-item (pressed) */
 .time-slot.is-selected{
-  border-color: rgba(246, 193, 204, 0.95);
+  border-color: black;
   background: rgba(246, 193, 204, 0.10);
 
   box-shadow:

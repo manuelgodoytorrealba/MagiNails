@@ -23,103 +23,32 @@
     <h1>MagiNails</h1>
   </header>
 
-  <main class="flow-content">
+ <main class="flow-content">
 
-    <!-- Top bar tipo app (X / Date / Clear filter) -->
-    <div class="day-topbar">
-      <a class="day-close" href="/pages/selector.html" aria-label="Cerrar"><img class="arrow-left" src="/assets/icons/arrow-left.svg" alt="" aria-hidden="true"></a>
-      <h2 class="day-topbar-title">Date</h2>
-      <button class="day-clear" type="button">Clear filter</button>
-    </div>
+  <div class="day-topbar">
+    <a class="day-close" href="/pages/selector.html" aria-label="Cerrar">
+      <img class="arrow-left" src="/assets/icons/arrow-left.svg" alt="" aria-hidden="true">
+    </a>
+    <h2 class="day-topbar-title">Fecha</h2>
+    <button class="day-clear" type="button" id="day-clear">Limpiar</button>
+  </div>
 
-    <!-- Weekdays -->
-    <div class="day-weekdays" aria-hidden="true">
-      <span class="is-weekend">Sun</span>
-      <span>Mon</span>
-      <span>Tue</span>
-      <span>Wed</span>
-      <span>Thu</span>
-      <span>Fri</span>
-      <span class="is-weekend">Sat</span>
-    </div>
+  <div class="day-weekdays" aria-hidden="true">
+    <span class="is-weekend">Dom</span>
+    <span>Lun</span>
+    <span>Mar</span>
+    <span>Mié</span>
+    <span>Jue</span>
+    <span>Vie</span>
+    <span class="is-weekend">Sáb</span>
+  </div>
 
-    <!-- Mes: Enero -->
-    <section class="month">
-      <h3 class="month-title">Enero 2026</h3>
+  <!-- ✅ Aquí JS pinta el mes actual y el siguiente -->
+  <div id="day-calendar"></div>
 
-      <div class="month-grid">
-        <!-- Relleno “vacío” para empezar en el día correcto (ajústalo luego con JS) -->
-        <span class="day-empty"></span>
-        <span class="day-empty"></span>
-        <span class="day-empty"></span>
-        <span class="day-empty"></span>
+  <button class="flow-save" type="button">Guardar</button>
 
-        <!-- Días -->
-        <button class="day-cell" type="button">1</button>
-        <button class="day-cell" type="button">2</button>
-        <button class="day-cell is-weekend" type="button">3</button>
-
-        <button class="day-cell is-weekend" type="button">4</button>
-        <button class="day-cell" type="button">5</button>
-        <button class="day-cell" type="button">6</button>
-        <button class="day-cell" type="button">7</button>
-        <button class="day-cell" type="button">8</button>
-        <button class="day-cell" type="button">9</button>
-        <button class="day-cell is-weekend" type="button">10</button>
-
-        <button class="day-cell is-weekend" type="button">11</button>
-        <button class="day-cell" type="button">12</button>
-        <button class="day-cell" type="button">13</button>
-        <button class="day-cell" type="button">14</button>
-        <button class="day-cell" type="button">15</button>
-        <button class="day-cell" type="button">16</button>
-        <button class="day-cell is-weekend" type="button">17</button>
-
-        <button class="day-cell is-weekend" type="button">18</button>
-        <button class="day-cell" type="button">19</button>
-        <button class="day-cell" type="button">20</button>
-        <button class="day-cell" type="button">21</button>
-        <button class="day-cell" type="button">22</button>
-        <button class="day-cell" type="button">23</button>
-        <button class="day-cell is-weekend" type="button">24</button>
-
-        <button class="day-cell is-weekend" type="button">25</button>
-        <button class="day-cell" type="button">26</button>
-        <button class="day-cell" type="button">27</button>
-        <button class="day-cell" type="button">28</button>
-
-        <!-- seleccionado como en tu diseño -->
-        <button class="day-cell is-selected" type="button" aria-pressed="true">30</button>
-
-        <button class="day-cell" type="button">31</button>
-      </div>
-    </section>
-
-    <!-- Mes: Febrero -->
-    <section class="month">
-      <h3 class="month-title">Febrero 2026</h3>
-
-      <div class="month-grid">
-        <button class="day-cell is-weekend" type="button">1</button>
-        <button class="day-cell" type="button">2</button>
-        <button class="day-cell" type="button">3</button>
-        <button class="day-cell" type="button">4</button>
-        <button class="day-cell" type="button">5</button>
-        <button class="day-cell" type="button">6</button>
-        <button class="day-cell is-weekend" type="button">7</button>
-
-        <button class="day-cell is-weekend" type="button">8</button>
-        <button class="day-cell" type="button">9</button>
-        <button class="day-cell" type="button">10</button>
-        <button class="day-cell" type="button">11</button>
-        <button class="day-cell" type="button">12</button>
-        <button class="day-cell" type="button">13</button>
-        <button class="day-cell is-weekend" type="button">14</button>
-      </div>
-    </section>
-
-  <button class="flow-save" type="button">Guardar</button>   
-  </main>
- 
+</main>
+ <script src="/scripts/booking.js"></script>
 </body>
 </html>
