@@ -93,6 +93,10 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+label{
+  font-family: var(--font-type-text);
+}
+
 body {
   margin: 0;
 

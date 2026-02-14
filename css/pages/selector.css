@@ -141,6 +141,69 @@
 
 
 /* =========================
+   MODAL WHATSAPP
+========================= */
+
+.booking-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.booking-modal.is-open {
+  display: flex;
+}
+
+.booking-modal-content {
+  background: #fff;
+  width: min(420px, 90%);
+  border-radius: 18px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: var(--shadow-lg);
+}
+
+.booking-modal-content input,
+.booking-modal-content textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-family: var(--font-type-text);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modal-actions button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#modal-send {
+  background: #111;
+  color: white;
+}
+
+#modal-cancel {
+  background: #eee;
+}
+
+
+/* =========================
    DESKTOP
    ========================= */
 @media (min-width: 1024px) {

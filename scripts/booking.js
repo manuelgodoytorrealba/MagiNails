@@ -62,34 +62,55 @@
     const ready = !!(state.service && state.zone && state.day && state.time);
 
     if (cta) {
-      cta.disabled = !ready;
+  cta.disabled = !ready;
 
-      cta.addEventListener("click", () => {
-        const latest = loadState();
-        const ok = !!(latest.service && latest.zone && latest.day && latest.time);
-        if (!ok) return;
+  const modal = document.getElementById("booking-modal");
+  const cancelBtn = document.getElementById("modal-cancel");
+  const sendBtn = document.getElementById("modal-send");
 
-        const fecha = formatDay(latest.day);
+  cta.addEventListener("click", () => {
+    if (!ready) return;
+    modal.classList.add("is-open");
+  });
 
-        const msg =
-          `Hola ✨
-          Quiero reservar una cita en MagiNails.
+  cancelBtn?.addEventListener("click", () => {
+    modal.classList.remove("is-open");
+  });
 
-          • Servicio: ${latest.service}
-          • Zona: ${latest.zone}
-          • Día: ${fecha}
-          • Horario: ${latest.time}
+  sendBtn?.addEventListener("click", () => {
+    const latest = loadState();
+    const name = document.getElementById("client-name").value.trim();
+    const note = document.getElementById("client-note").value.trim();
 
-          ¿Me confirmas disponibilidad, por favor?`;
-
-        const encoded = encodeURIComponent(msg);
-
-        const phone = "34680973028";
-        const url = `https://wa.me/${phone}?text=${encoded}`;
-
-        window.open(url, "_blank", "noopener,noreferrer");
-      });
+    if (!name) {
+      alert("Por favor, escribe tu nombre.");
+      return;
     }
+
+    const fecha = formatDay(latest.day);
+
+    const msg =
+`Hola ✨
+Quiero reservar una cita en MagiNails.
+
+• Nombre: ${name}
+• Servicio: ${latest.service}
+• Zona: ${latest.zone}
+• Día: ${fecha}
+• Horario: ${latest.time}
+${note ? `• Nota: ${note}` : ""}
+
+¿Me confirmas disponibilidad?`;
+
+    const encoded = encodeURIComponent(msg);
+    const phone = "34680973028";
+    const url = `https://wa.me/${phone}?text=${encoded}`;
+
+    window.open(url, "_blank", "noopener,noreferrer");
+    modal.classList.remove("is-open");
+  });
+}
+
 
 
   };
