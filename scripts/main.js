@@ -16,3 +16,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+
+window.addEventListener("load", () => {
+  const loader = document.getElementById("app-loader");
+  if (!loader) return;
+
+  // deja que pinte 1 frame para que la transición se vea
+  requestAnimationFrame(() => {
+    loader.classList.add("is-hidden");
+    setTimeout(() => loader.remove(), 320);
+  });
+});
