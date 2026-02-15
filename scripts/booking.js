@@ -5,8 +5,8 @@
   const DEFAULT_STATE = {
     service: null,
     zone: null,
-    day: null,   // formato "YYYY-MM-DD"
-    time: null,  // ejemplo "11:00 AM"
+    day: null,  // "YYYY-MM-DD"
+    time: null, // "11:00 AM"
   };
 
   const loadState = () => {
@@ -32,12 +32,18 @@
   };
 
   const formatDay = (iso) => {
-    // iso: "YYYY-MM-DD"
     if (!iso) return null;
     const [y, m, d] = iso.split("-");
     if (!y || !m || !d) return null;
-    // DD-MM-YY
-    return `${d}-${m}-${y.slice(2)}`;
+    return `${d}-${m}-${y.slice(2)}`; // DD-MM-YY
+  };
+
+  // "Servicio, Zona y Horario"
+  const joinNice = (arr) => {
+    if (!arr || arr.length === 0) return "";
+    if (arr.length === 1) return arr[0];
+    if (arr.length === 2) return `${arr[0]} y ${arr[1]}`;
+    return `${arr.slice(0, -1).join(", ")} y ${arr[arr.length - 1]}`;
   };
 
   const page = document.body;
@@ -53,44 +59,97 @@
     const dayEl = document.getElementById("selector-day");
     const timeEl = document.getElementById("selector-time");
     const cta = document.getElementById("selector-cta");
+    const hint = document.getElementById("selector-hint");
 
-    if (serviceEl) serviceEl.textContent = state.service ?? "Selecciona un servicio";
-    if (zoneEl) zoneEl.textContent = state.zone ?? "Selecciona una zona";
-    if (dayEl) dayEl.textContent = state.day ? formatDay(state.day) : "Selecciona un día";
-    if (timeEl) timeEl.textContent = state.time ?? "Selecciona un horario";
+    // Cards (wrapper)
+    const cardService = document.getElementById("card-service");
+    const cardZone = document.getElementById("card-zone");
+    const cardDay = document.getElementById("card-day");
+    const cardTime = document.getElementById("card-time");
 
-    const ready = !!(state.service && state.zone && state.day && state.time);
+    // Modal
+    const modal = document.getElementById("booking-modal");
+    const cancelBtn = document.getElementById("modal-cancel");
+    const sendBtn = document.getElementById("modal-send");
 
-    if (cta) {
-  cta.disabled = !ready;
+    // Render values (solo texto)
+    const setValue = (el, value, placeholder) => {
+      if (!el) return;
+      el.textContent = value ?? placeholder;
+    };
 
-  const modal = document.getElementById("booking-modal");
-  const cancelBtn = document.getElementById("modal-cancel");
-  const sendBtn = document.getElementById("modal-send");
+    setValue(serviceEl, state.service, "Selecciona un servicio");
+    setValue(zoneEl, state.zone, "Selecciona una zona");
+    setValue(dayEl, state.day ? formatDay(state.day) : null, "Selecciona un día");
+    setValue(timeEl, state.time, "Selecciona un horario");
 
-  cta.addEventListener("click", () => {
-    if (!ready) return;
-    modal.classList.add("is-open");
-  });
+    const cards = [
+      { key: "Servicio", ok: !!state.service, card: cardService },
+      { key: "Zona", ok: !!state.zone, card: cardZone },
+      { key: "Día", ok: !!state.day, card: cardDay },
+      { key: "Horario", ok: !!state.time, card: cardTime },
+    ];
 
-  cancelBtn?.addEventListener("click", () => {
-    modal.classList.remove("is-open");
-  });
+    const done = cards.filter((c) => c.ok).length;
+    const missing = cards.filter((c) => !c.ok);
+    const ready = done === 4;
 
-  sendBtn?.addEventListener("click", () => {
-    const latest = loadState();
-    const name = document.getElementById("client-name").value.trim();
-    const note = document.getElementById("client-note").value.trim();
+    // estados visuales por card
+    cards.forEach(({ ok, card }) => {
+      if (!card) return;
+      card.classList.toggle("is-filled", ok);
+      card.classList.toggle("is-empty", !ok);
+      card.classList.remove("is-attention");
+    });
 
-    if (!name) {
-      alert("Por favor, escribe tu nombre.");
-      return;
+    // botón
+    if (cta) cta.disabled = !ready;
+
+    // hint dinámico (solo 1) - texto más natural
+    if (hint) {
+      if (ready) {
+        hint.textContent = "";
+        hint.classList.remove("is-visible");
+      } else {
+        const faltanArr = missing.map((m) => m.key);
+        const faltan = joinNice(faltanArr);
+
+        if (done === 0) {
+          hint.textContent = "Elige una opción en cada tarjeta para continuar.";
+        } else if (faltanArr.length === 1) {
+          hint.textContent = `Casi listo ✨ Solo falta: ${faltan}.`;
+        } else {
+          hint.textContent = `Te falta elegir: ${faltan}.`;
+        }
+
+        hint.classList.add("is-visible");
+      }
     }
 
-    const fecha = formatDay(latest.day);
+    // --- Modal actions (evita duplicar listeners)
+    cancelBtn?.addEventListener(
+      "click",
+      () => {
+        modal?.classList.remove("is-open");
+      },
+      { once: true }
+    );
 
-    const msg =
-`Hola ✨
+    sendBtn?.addEventListener(
+      "click",
+      () => {
+        const latest = loadState();
+        const name = document.getElementById("client-name")?.value.trim() ?? "";
+        const note = document.getElementById("client-note")?.value.trim() ?? "";
+
+        if (!name) {
+          alert("Por favor, escribe tu nombre.");
+          return;
+        }
+
+        const fecha = formatDay(latest.day);
+
+        const msg = `Hola ✨
 Quiero reservar una cita en MagiNails.
 
 • Nombre: ${name}
@@ -102,17 +161,56 @@ ${note ? `• Nota: ${note}` : ""}
 
 ¿Me confirmas disponibilidad?`;
 
-    const encoded = encodeURIComponent(msg);
-    const phone = "34680973028";
-    const url = `https://wa.me/${phone}?text=${encoded}`;
+        const url = `https://wa.me/34680973028?text=${encodeURIComponent(msg)}`;
+        window.open(url, "_blank", "noopener,noreferrer");
+        modal?.classList.remove("is-open");
+      },
+      { once: true }
+    );
 
-    window.open(url, "_blank", "noopener,noreferrer");
-    modal.classList.remove("is-open");
-  });
-}
+    // Click CTA
+    cta?.addEventListener(
+      "click",
+      () => {
+        const latest = loadState();
 
+        const latestCards = [
+          { key: "Servicio", ok: !!latest.service, card: cardService },
+          { key: "Zona", ok: !!latest.zone, card: cardZone },
+          { key: "Día", ok: !!latest.day, card: cardDay },
+          { key: "Horario", ok: !!latest.time, card: cardTime },
+        ];
 
+        const done2 = latestCards.filter((c) => c.ok).length;
+        const missing2 = latestCards.filter((c) => !c.ok);
 
+        if (missing2.length) {
+          cta.classList.remove("is-shaking");
+          void cta.offsetWidth;
+          cta.classList.add("is-shaking");
+
+          missing2.forEach((m) => m.card?.classList.add("is-attention"));
+          setTimeout(() => missing2.forEach((m) => m.card?.classList.remove("is-attention")), 700);
+
+          if (hint) {
+            const faltanArr2 = missing2.map((m) => m.key);
+            const faltan2 = joinNice(faltanArr2);
+
+            hint.textContent =
+              faltanArr2.length === 1
+                ? `Casi listo ✨ Solo falta: ${faltan2}.`
+                : `Te falta elegir: ${faltan2}.`;
+
+            hint.classList.add("is-visible");
+          }
+
+          return;
+        }
+
+        modal?.classList.add("is-open");
+      },
+      { once: true }
+    );
   };
 
   // =========================
@@ -126,27 +224,26 @@ ${note ? `• Nota: ${note}` : ""}
     const state = loadState();
     let currentValue = state[field] ?? null;
 
-    // si hay algo guardado, marcarlo visualmente
-    if (currentValue) {
+    const applySelection = () => {
       items.forEach((el) => {
         const v = el.getAttribute("data-value");
         el.classList.toggle(selectedClass, v === currentValue);
+        if (v === currentValue) el.setAttribute("aria-pressed", "true");
+        else el.removeAttribute("aria-pressed");
       });
-    }
+    };
+
+    applySelection();
 
     items.forEach((el) => {
       el.addEventListener("click", () => {
-        items.forEach((x) => x.classList.remove(selectedClass));
-        el.classList.add(selectedClass);
-        currentValue = el.getAttribute("data-value");
+        const v = el.getAttribute("data-value");
+        currentValue = currentValue === v ? null : v; // toggle
+        applySelection();
       });
     });
 
     saveBtn.addEventListener("click", () => {
-      if (!currentValue) return;
-
-      // Si cambia el día, normalmente debería resetear horario.
-      // Pero aquí aplica solo si field === "day".
       setState({ [field]: currentValue });
       window.location.href = "/pages/selector.html";
     });
@@ -163,27 +260,30 @@ ${note ? `• Nota: ${note}` : ""}
     if (!calendarRoot || !saveBtn) return;
 
     const state = loadState();
-
-    // Si ya hay una fecha guardada, úsala; si no, usa hoy
     const today = new Date();
-    const initialIso = state.day ?? `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
-
     let selectedIso = state.day ?? null;
 
     const MONTHS_ES = [
-      "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-      "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre",
+      "Diciembre",
     ];
 
     const buildMonth = (year, monthIndex) => {
-      // monthIndex: 0-11
       const firstDay = new Date(year, monthIndex, 1);
       const lastDay = new Date(year, monthIndex + 1, 0);
       const daysInMonth = lastDay.getDate();
 
-      // Queremos semana empezando en Lunes, pero tu UI empieza en Dom (Dom...Sáb)
-      // Con Dom primero, getDay() ya sirve: 0=Dom, 1=Lun...6=Sáb
-      const offset = firstDay.getDay(); // cantidad de "vacíos" antes del día 1
+      const offset = firstDay.getDay(); // 0=Dom ... 6=Sáb
 
       const section = document.createElement("section");
       section.className = "month";
@@ -196,14 +296,12 @@ ${note ? `• Nota: ${note}` : ""}
       const grid = document.createElement("div");
       grid.className = "month-grid";
 
-      // vacíos
       for (let i = 0; i < offset; i++) {
         const empty = document.createElement("span");
         empty.className = "day-empty";
         grid.appendChild(empty);
       }
 
-      // días
       for (let d = 1; d <= daysInMonth; d++) {
         const btn = document.createElement("button");
         btn.className = "day-cell";
@@ -212,24 +310,31 @@ ${note ? `• Nota: ${note}` : ""}
 
         const iso = `${year}-${String(monthIndex + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
 
-        // marcar HOY
         const isToday =
-          iso === `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+          iso ===
+          `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(
+            today.getDate()
+          ).padStart(2, "0")}`;
 
         if (isToday) btn.classList.add("is-today");
 
-        // marcar SELECCIONADO (si existía o si el usuario hace click)
         if (selectedIso && iso === selectedIso) {
           btn.classList.add("is-selected");
           btn.setAttribute("aria-pressed", "true");
         }
 
         btn.addEventListener("click", () => {
-          // desmarcar otros
+          const isSame = selectedIso === iso;
+
           calendarRoot.querySelectorAll(".day-cell.is-selected").forEach((x) => {
             x.classList.remove("is-selected");
             x.removeAttribute("aria-pressed");
           });
+
+          if (isSame) {
+            selectedIso = null; // toggle off
+            return;
+          }
 
           btn.classList.add("is-selected");
           btn.setAttribute("aria-pressed", "true");
@@ -243,9 +348,7 @@ ${note ? `• Nota: ${note}` : ""}
       return section;
     };
 
-    // Render: mes actual (foco) + siguiente
-   const baseDate = state.day ? new Date(state.day) : new Date();
-
+    const baseDate = state.day ? new Date(state.day) : new Date();
     const y = baseDate.getFullYear();
     const m = baseDate.getMonth();
 
@@ -255,10 +358,9 @@ ${note ? `• Nota: ${note}` : ""}
     const next = new Date(y, m + 1, 1);
     calendarRoot.appendChild(buildMonth(next.getFullYear(), next.getMonth()));
 
-    // Botón limpiar: borra día y (opcional) horario
     if (clearBtn) {
       clearBtn.addEventListener("click", () => {
-        setState({ day: null, time: null }); // si cambias día, lo normal es resetear horario
+        setState({ day: null, time: null });
         selectedIso = null;
 
         calendarRoot.querySelectorAll(".day-cell.is-selected").forEach((x) => {
@@ -269,9 +371,14 @@ ${note ? `• Nota: ${note}` : ""}
     }
 
     saveBtn.addEventListener("click", () => {
-      if (!selectedIso) return;
-
       const current = loadState();
+
+      if (!selectedIso) {
+        setState({ day: null, time: null });
+        window.location.href = "/pages/selector.html";
+        return;
+      }
+
       const shouldResetTime = current.day && current.day !== selectedIso;
 
       setState({
@@ -283,9 +390,8 @@ ${note ? `• Nota: ${note}` : ""}
     });
   };
 
-
   // =========================
-  // ROUTER SIMPLE POR CLASE BODY
+  // ROUTER
   // =========================
   document.addEventListener("DOMContentLoaded", () => {
     if (page.classList.contains("selector-page")) {
@@ -293,7 +399,6 @@ ${note ? `• Nota: ${note}` : ""}
       return;
     }
 
-    // servicio
     if (document.querySelector(".service-list")) {
       initSelectableListPage({
         itemSelector: ".service-item",
@@ -303,7 +408,6 @@ ${note ? `• Nota: ${note}` : ""}
       return;
     }
 
-    // zona
     if (document.querySelector(".zone-list")) {
       initSelectableListPage({
         itemSelector: ".zone-item",
@@ -313,7 +417,6 @@ ${note ? `• Nota: ${note}` : ""}
       return;
     }
 
-    // horario
     if (document.querySelector(".time-grid")) {
       initSelectableListPage({
         itemSelector: ".time-slot",
@@ -323,7 +426,6 @@ ${note ? `• Nota: ${note}` : ""}
       return;
     }
 
-    // día
     if (document.getElementById("day-calendar")) {
       initDayPage();
       return;
