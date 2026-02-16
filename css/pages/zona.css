@@ -1,26 +1,27 @@
-header{
-    display: none;
+header {
+  display: none;
 }
 
 /* Zona page: mismo look que el diseño */
 
 /* Lista */
-.zone-list{
+.zone-list {
   display: flex;
   flex-direction: column;
   gap: 30px;
 }
 
 /* Card */
-.zone-item{
+.zone-item {
   width: 100%;
   background: #fff;
-  border: 2px solid rgba(0,0,0,0.45);
+  border: 2px solid rgba(0, 0, 0, 0.45);
   border-radius: 14px;
   padding: 14px 16px;
 
   display: grid;
-  grid-template-columns: 54px 1fr 54px; /* icon | texto | icon */
+  grid-template-columns: 54px 1fr 54px;
+  /* icon | texto | icon */
   align-items: center;
   gap: 12px;
 
@@ -30,23 +31,23 @@ header{
 
 /* Izq/Der icon */
 .zone-left,
-.zone-right{
+.zone-right {
   display: grid;
   place-items: center;
 }
 
-.zone-icon{
+.zone-icon {
   width: 34px;
   height: 34px;
   object-fit: contain;
 }
 
 /* Texto centrado como el mock */
-.zone-mid{
+.zone-mid {
   text-align: center;
 }
 
-.zone-name{
+.zone-name {
   margin: 0;
   font-family: var(--font-type-text);
   font-weight: 600;
@@ -54,7 +55,7 @@ header{
   line-height: 1.05;
 }
 
-.zone-desc{
+.zone-desc {
   margin: 4px 0 0;
   font-family: var(--font-type-text);
   font-size: 12px;
@@ -62,20 +63,52 @@ header{
 }
 
 /* Selected state */
-.zone-item.is-selected{
+.zone-item.is-selected {
 
 
-    border-color:black;
-    background: rgba(246, 193, 204, 0.1);
+  border-color: black;
+  background: rgba(246, 193, 204, 0.1);
 
-    box-shadow:
-        inset 0 4px 10px rgba(0, 0, 0, 0.22),
-        inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    inset 0 4px 10px rgba(0, 0, 0, 0.22),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.06);
 
 
 }
 
+/* =========================
+   OTRA ZONA (integrado)
+   ========================= */
 
-@media(min-width:1024px){
-    
+.zone-custom {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
+
+/* Input oculto por defecto */
+.zone-input {
+  display: none;
+  width: 95%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.15);
+  font-family: var(--font-type-text);
+  font-size: 14px;
+  background: rgba(255,255,255,0.9);
+}
+
+/* Cuando el custom está seleccionado, mostramos input */
+.zone-custom.is-open .zone-input {
+  display: block;
+}
+
+/* Un poquito más integrado visualmente */
+.zone-custom.is-open .zone-item-custom {
+  border-color: black;
+  background: rgba(246, 193, 204, 0.10);
+}
+
+
+@media(min-width:1024px) {}

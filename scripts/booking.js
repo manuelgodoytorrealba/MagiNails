@@ -46,6 +46,15 @@
     return `${arr.slice(0, -1).join(", ")} y ${arr[arr.length - 1]}`;
   };
 
+  // Evita listeners duplicados sin romper interacciones (NO usamos { once:true } aquí)
+  const bindOnce = (el, eventName, key, handler) => {
+    if (!el) return;
+    const flag = `bound_${key}`;
+    if (el.dataset[flag] === "1") return;
+    el.dataset[flag] = "1";
+    el.addEventListener(eventName, handler);
+  };
+
   const page = document.body;
 
   // =========================
@@ -105,51 +114,49 @@
     // botón
     if (cta) cta.disabled = !ready;
 
-    // hint dinámico (solo 1) - texto más natural
-    if (hint) {
-      if (ready) {
+    // hint dinámico (texto natural)
+    const paintHint = (missingKeys, doneCount, isReady) => {
+      if (!hint) return;
+      if (isReady) {
         hint.textContent = "";
         hint.classList.remove("is-visible");
-      } else {
-        const faltanArr = missing.map((m) => m.key);
-        const faltan = joinNice(faltanArr);
-
-        if (done === 0) {
-          hint.textContent = "Elige una opción en cada tarjeta para continuar.";
-        } else if (faltanArr.length === 1) {
-          hint.textContent = `Casi listo ✨ Solo falta: ${faltan}.`;
-        } else {
-          hint.textContent = `Te falta elegir: ${faltan}.`;
-        }
-
-        hint.classList.add("is-visible");
+        return;
       }
-    }
 
-    // --- Modal actions (evita duplicar listeners)
-    cancelBtn?.addEventListener(
-      "click",
-      () => {
-        modal?.classList.remove("is-open");
-      },
-      { once: true }
-    );
+      const faltan = joinNice(missingKeys);
 
-    sendBtn?.addEventListener(
-      "click",
-      () => {
-        const latest = loadState();
-        const name = document.getElementById("client-name")?.value.trim() ?? "";
-        const note = document.getElementById("client-note")?.value.trim() ?? "";
+      if (doneCount === 0) {
+        hint.textContent = "Elige una opción en cada tarjeta para continuar.";
+      } else if (missingKeys.length === 1) {
+        hint.textContent = `Casi listo ✨ Solo falta: ${faltan}.`;
+      } else {
+        hint.textContent = `Te falta elegir: ${faltan}.`;
+      }
 
-        if (!name) {
-          alert("Por favor, escribe tu nombre.");
-          return;
-        }
+      hint.classList.add("is-visible");
+    };
 
-        const fecha = formatDay(latest.day);
+    paintHint(missing.map((m) => m.key), done, ready);
 
-        const msg = `Hola ✨
+    // Modal: cerrar
+    bindOnce(cancelBtn, "click", "modal_cancel", () => {
+      modal?.classList.remove("is-open");
+    });
+
+    // Modal: enviar WhatsApp
+    bindOnce(sendBtn, "click", "modal_send", () => {
+      const latest = loadState();
+      const name = document.getElementById("client-name")?.value.trim() ?? "";
+      const note = document.getElementById("client-note")?.value.trim() ?? "";
+
+      if (!name) {
+        alert("Por favor, escribe tu nombre.");
+        return;
+      }
+
+      const fecha = formatDay(latest.day);
+
+      const msg = `Hola ✨
 Quiero reservar una cita en MagiNails.
 
 • Nombre: ${name}
@@ -161,60 +168,43 @@ ${note ? `• Nota: ${note}` : ""}
 
 ¿Me confirmas disponibilidad?`;
 
-        const url = `https://wa.me/34680973028?text=${encodeURIComponent(msg)}`;
-        window.open(url, "_blank", "noopener,noreferrer");
-        modal?.classList.remove("is-open");
-      },
-      { once: true }
-    );
+      const url = `https://wa.me/34680973028?text=${encodeURIComponent(msg)}`;
+      window.open(url, "_blank", "noopener,noreferrer");
+      modal?.classList.remove("is-open");
+    });
 
     // Click CTA
-    cta?.addEventListener(
-      "click",
-      () => {
-        const latest = loadState();
+    bindOnce(cta, "click", "cta_click", () => {
+      const latest = loadState();
 
-        const latestCards = [
-          { key: "Servicio", ok: !!latest.service, card: cardService },
-          { key: "Zona", ok: !!latest.zone, card: cardZone },
-          { key: "Día", ok: !!latest.day, card: cardDay },
-          { key: "Horario", ok: !!latest.time, card: cardTime },
-        ];
+      const latestCards = [
+        { key: "Servicio", ok: !!latest.service, card: cardService },
+        { key: "Zona", ok: !!latest.zone, card: cardZone },
+        { key: "Día", ok: !!latest.day, card: cardDay },
+        { key: "Horario", ok: !!latest.time, card: cardTime },
+      ];
 
-        const done2 = latestCards.filter((c) => c.ok).length;
-        const missing2 = latestCards.filter((c) => !c.ok);
+      const done2 = latestCards.filter((c) => c.ok).length;
+      const missing2 = latestCards.filter((c) => !c.ok);
 
-        if (missing2.length) {
-          cta.classList.remove("is-shaking");
-          void cta.offsetWidth;
-          cta.classList.add("is-shaking");
+      if (missing2.length) {
+        cta?.classList.remove("is-shaking");
+        void cta?.offsetWidth;
+        cta?.classList.add("is-shaking");
 
-          missing2.forEach((m) => m.card?.classList.add("is-attention"));
-          setTimeout(() => missing2.forEach((m) => m.card?.classList.remove("is-attention")), 700);
+        missing2.forEach((m) => m.card?.classList.add("is-attention"));
+        setTimeout(() => missing2.forEach((m) => m.card?.classList.remove("is-attention")), 700);
 
-          if (hint) {
-            const faltanArr2 = missing2.map((m) => m.key);
-            const faltan2 = joinNice(faltanArr2);
+        paintHint(missing2.map((m) => m.key), done2, false);
+        return;
+      }
 
-            hint.textContent =
-              faltanArr2.length === 1
-                ? `Casi listo ✨ Solo falta: ${faltan2}.`
-                : `Te falta elegir: ${faltan2}.`;
-
-            hint.classList.add("is-visible");
-          }
-
-          return;
-        }
-
-        modal?.classList.add("is-open");
-      },
-      { once: true }
-    );
+      modal?.classList.add("is-open");
+    });
   };
 
   // =========================
-  // GENERIC SELECT LIST (servicio / zona / horario)
+  // GENERIC SELECT LIST (servicio / horario)
   // =========================
   const initSelectableListPage = ({ itemSelector, selectedClass, field }) => {
     const items = Array.from(document.querySelectorAll(itemSelector));
@@ -243,11 +233,155 @@ ${note ? `• Nota: ${note}` : ""}
       });
     });
 
-    saveBtn.addEventListener("click", () => {
+    bindOnce(saveBtn, "click", `save_${field}`, () => {
       setState({ [field]: currentValue });
       window.location.href = "/pages/selector.html";
     });
   };
+
+ // =========================
+// ZONE PAGE (incluye "Otra zona" con input oculto)
+// Requiere en zona.html:
+// - div.zone-custom
+// - button#zone-custom-btn
+// - input#zone-custom-input
+// - botones normales con: .zone-item[data-value="..."]
+// =========================
+const initZonePage = () => {
+  const saveBtn = document.querySelector(".flow-save");
+
+  const customWrap = document.querySelector(".zone-custom");
+  const customBtn = document.getElementById("zone-custom-btn");
+  const customInput = document.getElementById("zone-custom-input");
+
+  // ✅ Solo zonas normales (las que tienen data-value)
+  const normalItems = Array.from(document.querySelectorAll(".zone-item[data-value]"));
+
+  if (!saveBtn || !normalItems.length) return;
+
+  const state = loadState();
+  let currentValue = state.zone ?? null;
+
+  const predefinedValues = normalItems
+    .map((el) => el.getAttribute("data-value"))
+    .filter(Boolean);
+
+  const isCustomValue = (val) => !!(val && !predefinedValues.includes(val));
+
+  // Estado visual del custom (si está abierto)
+  let customOpen = false;
+
+  const openCustom = (open) => {
+    customOpen = open;
+
+    if (customWrap) customWrap.classList.toggle("is-open", open);
+    if (customBtn) customBtn.classList.toggle("is-selected", open);
+
+    if (open) {
+      customInput?.focus();
+    } else {
+      // al cerrar custom, limpiamos el input (si quieres mantenerlo, quita esta línea)
+      if (customInput) customInput.value = "";
+    }
+  };
+
+  const applySelection = () => {
+    // Selección de zonas normales
+    normalItems.forEach((el) => {
+      const v = el.getAttribute("data-value");
+      const selected = !!(v && v === currentValue);
+      el.classList.toggle("is-selected", selected);
+      if (selected) el.setAttribute("aria-pressed", "true");
+      else el.removeAttribute("aria-pressed");
+    });
+
+    // Custom marcado si está abierto o si el valor guardado era custom
+    const customSelected = customOpen || isCustomValue(currentValue);
+    if (customBtn) {
+      customBtn.classList.toggle("is-selected", customSelected);
+      if (customSelected) customBtn.setAttribute("aria-pressed", "true");
+      else customBtn.removeAttribute("aria-pressed");
+    }
+    if (customWrap) customWrap.classList.toggle("is-open", customSelected);
+  };
+
+  // ✅ Precarga: si había una zona custom guardada, abrir y rellenar
+  if (customInput && isCustomValue(currentValue)) {
+    customInput.value = currentValue;
+    openCustom(true);
+  } else {
+    openCustom(false);
+  }
+
+  applySelection();
+
+  // Click zonas normales (toggle)
+  normalItems.forEach((el) => {
+    el.addEventListener("click", () => {
+      const v = el.getAttribute("data-value");
+      if (!v) return;
+
+      // toggle normal
+      currentValue = currentValue === v ? null : v;
+
+      // si eligen normal, cerrar custom
+      openCustom(false);
+
+      applySelection();
+    });
+  });
+
+  // Click “Otra zona” (abre/cierra)
+  customBtn?.addEventListener("click", () => {
+    openCustom(!customOpen);
+    // si abre sin texto, currentValue queda null (ok)
+    // si ya hay texto, lo tomamos
+    const txt = customInput?.value.trim() ?? "";
+    currentValue = txt || (customOpen ? null : currentValue);
+    applySelection();
+  });
+
+  // Escribir en el input => activa modo custom y guarda en memoria local (en currentValue)
+  customInput?.addEventListener("input", () => {
+    const txt = customInput.value.trim();
+
+    if (txt.length > 0) {
+      // si escriben, forzamos custom abierto y valor custom
+      openCustom(true);
+      currentValue = txt;
+    } else {
+      // si borran todo, queda sin selección custom
+      currentValue = null;
+      // mantenemos abierto para que puedan seguir escribiendo si quieren
+      openCustom(true);
+    }
+
+    // deselecciona normales (visual)
+    normalItems.forEach((x) => x.classList.remove("is-selected"));
+    applySelection();
+  });
+
+  // Guardar
+  bindOnce(saveBtn, "click", "save_zone", () => {
+    // si custom está activo, exige texto
+    if (customOpen || isCustomValue(currentValue)) {
+      const txt = customInput?.value.trim() ?? "";
+      if (!txt) {
+        alert("Escribe tu zona o código postal.");
+        return;
+      }
+      setState({ zone: txt });
+      window.location.href = "/pages/selector.html";
+      return;
+    }
+
+    // normal / o null
+    setState({ zone: currentValue });
+    window.location.href = "/pages/selector.html";
+  });
+};
+
+
 
   // =========================
   // DAY PAGE (calendario)
@@ -264,18 +398,8 @@ ${note ? `• Nota: ${note}` : ""}
     let selectedIso = state.day ?? null;
 
     const MONTHS_ES = [
-      "Enero",
-      "Febrero",
-      "Marzo",
-      "Abril",
-      "Mayo",
-      "Junio",
-      "Julio",
-      "Agosto",
-      "Septiembre",
-      "Octubre",
-      "Noviembre",
-      "Diciembre",
+      "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+      "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",
     ];
 
     const buildMonth = (year, monthIndex) => {
@@ -311,10 +435,7 @@ ${note ? `• Nota: ${note}` : ""}
         const iso = `${year}-${String(monthIndex + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
 
         const isToday =
-          iso ===
-          `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(
-            today.getDate()
-          ).padStart(2, "0")}`;
+          iso === `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
 
         if (isToday) btn.classList.add("is-today");
 
@@ -359,7 +480,7 @@ ${note ? `• Nota: ${note}` : ""}
     calendarRoot.appendChild(buildMonth(next.getFullYear(), next.getMonth()));
 
     if (clearBtn) {
-      clearBtn.addEventListener("click", () => {
+      bindOnce(clearBtn, "click", "day_clear", () => {
         setState({ day: null, time: null });
         selectedIso = null;
 
@@ -370,7 +491,7 @@ ${note ? `• Nota: ${note}` : ""}
       });
     }
 
-    saveBtn.addEventListener("click", () => {
+    bindOnce(saveBtn, "click", "day_save", () => {
       const current = loadState();
 
       if (!selectedIso) {
@@ -408,12 +529,18 @@ ${note ? `• Nota: ${note}` : ""}
       return;
     }
 
+    // Zona: si existe input custom, usamos initZonePage
     if (document.querySelector(".zone-list")) {
-      initSelectableListPage({
-        itemSelector: ".zone-item",
-        selectedClass: "is-selected",
-        field: "zone",
-      });
+      if (document.getElementById("zone-custom-input") || document.getElementById("zone-custom-btn")) {
+        initZonePage();
+      } else {
+        // fallback por si aún no añadiste la parte de "Otra zona"
+        initSelectableListPage({
+          itemSelector: ".zone-item",
+          selectedClass: "is-selected",
+          field: "zone",
+        });
+      }
       return;
     }
 

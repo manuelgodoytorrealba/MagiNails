@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <link rel="icon" href="/assets/favicon/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/android-chrome-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+  <meta name="theme-color" content="#ffffff">
+
 
   <link rel="stylesheet" href="/css/base.css" />
   <link rel="stylesheet" href="/css/components.css" />
@@ -19,7 +26,6 @@
 </head>
 
 <body class="flow-page">
-
   <header>
     <h1>MagiNails</h1>
   </header>
@@ -32,7 +38,6 @@
     <h2 class="flow-title">Selecciona una zona</h2>
 
     <section class="zone-list">
-
       <button class="zone-item" type="button" data-value="Canillas">
         <div class="zone-left">
           <img class="zone-icon" src="/assets/icons/book-heart.svg" alt="" aria-hidden="true" />
@@ -108,10 +113,32 @@
         </div>
       </button>
 
+      <!-- ✅ OTRA ZONA (personalizada) -->
+      <div class="zone-custom">
+        <button class="zone-item zone-item-custom" type="button" id="zone-custom-btn">
+          <div class="zone-left">
+            <img class="zone-icon" src="/assets/icons/book-heart.svg" alt="" aria-hidden="true" />
+          </div>
+
+          <div class="zone-mid">
+            <h3 class="zone-name">Otra zona</h3>
+            <p class="zone-desc">Escribe tu barrio o código postal</p>
+          </div>
+
+          <div class="zone-right">
+            <img class="zone-icon" src="/assets/icons/book-heart.svg" alt="" aria-hidden="true" />
+          </div>
+        </button>
+
+        <input class="zone-input" id="zone-custom-input" type="text" placeholder="Ej: Chamberí, 28010"
+          autocomplete="address-level2" />
+      </div>
     </section>
 
     <button class="flow-save" type="button">Guardar</button>
   </main>
-<script src="/scripts/booking.js"></script>
+
+  <script src="/scripts/booking.js"></script>
 </body>
+
 </html>
