@@ -2,49 +2,70 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
-    <link rel="icon" href="/assets/favicon/favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/android-chrome-192x192.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
-    <meta name="theme-color" content="#ffffff">
+  <title>MagiNails</title>
+  <meta name="theme-color" content="#ffffff" />
 
+  <!-- FAVICON -->
+  <link rel="icon" href="/assets/favicon/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon/favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/android-chrome-192x192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="MagiNails · Reserva tu cita">
-    <meta property="og:description"
-        content="Reserva tu cita de manicura a domicilio en Madrid. Fácil, rápido y elegante ✨">
-    <meta property="og:image" content="https://maginails.com/assets/images/og-image.jpeg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:site_name" content="MagiNails">
-    <meta property="og:url" content="https://maginails.com">
-    <meta property="og:type" content="website">
+  <!-- Open Graph -->
+  <meta property="og:title" content="MagiNails · Reserva tu cita" />
+  <meta property="og:description" content="Reserva tu cita de manicura a domicilio en Madrid. Fácil, rápido y elegante ✨" />
+  <meta property="og:image" content="https://maginails.com/assets/images/og-image.jpeg" />
+  <meta property="og:image:secure_url" content="https://maginails.com/assets/images/og-image.jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="MagiNails" />
+  <meta property="og:url" content="https://maginails.com" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_ES" />
 
-    <!-- Twitter (también lo usan otras apps) -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="MagiNails · Reserva tu cita">
-    <meta name="twitter:description" content="Reserva tu cita de manicura a domicilio en Madrid ✨">
-    <meta name="twitter:image" content="https://maginails.com/assets/images/og-image.jpeg">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="MagiNails · Reserva tu cita" />
+  <meta name="twitter:description" content="Reserva tu cita de manicura a domicilio en Madrid ✨" />
+  <meta name="twitter:image" content="https://maginails.com/assets/images/og-image.jpeg" />
 
+  <!-- Structured Data (Google) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "MagiNails",
+    "url": "https://maginails.com",
+    "image": "https://maginails.com/assets/images/og-image.jpeg",
+    "logo": "https://maginails.com/assets/images/og-image.jpeg",
+    "sameAs": [
+      "https://www.instagram.com/maginailsve",
+      "https://www.tiktok.com/@mgta1999"
+    ]
+  }
+  </script>
 
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/layout.css" />
+  <link rel="stylesheet" href="/css/pages.css" />
 
-    <link rel="stylesheet" href="/css/base.css">
-    <link rel="stylesheet" href="/css/components.css">
-    <link rel="stylesheet" href="/css/layout.css">
-    <link rel="stylesheet" href="/css/pages.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Gabriela&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script async src="https://www.tiktok.com/embed.js"></script>
-    <script src="/scripts/main.js"></script>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gabriela&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-    <title>MagiNails</title>
+  <!-- TikTok -->
+  <script async src="https://www.tiktok.com/embed.js"></script>
+
+  <!-- Tu JS (si lo quieres dejar aquí, ok). Mejor: ponerlo al final con defer -->
+  <script src="/scripts/main.js" defer></script>
 </head>
 
 <body>
