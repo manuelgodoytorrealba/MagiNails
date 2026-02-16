@@ -5,7 +5,7 @@
 .time-grid{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 18px 22px; /* row/col */
+  gap: 22px 22px; /* row/col */
   justify-items: center;
 
   padding: 10px 0 6px;
