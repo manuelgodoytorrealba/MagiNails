@@ -168,7 +168,7 @@ ${note ? `• Nota: ${note}` : ""}
 
 ¿Me confirmas disponibilidad?`;
 
-      const url = `https://wa.me/34680973028?text=${encodeURIComponent(msg)}`;
+      const url = `https://wa.me/34646074096?text=${encodeURIComponent(msg)}`;
       window.open(url, "_blank", "noopener,noreferrer");
       modal?.classList.remove("is-open");
     });
@@ -239,147 +239,147 @@ ${note ? `• Nota: ${note}` : ""}
     });
   };
 
- // =========================
-// ZONE PAGE (incluye "Otra zona" con input oculto)
-// Requiere en zona.html:
-// - div.zone-custom
-// - button#zone-custom-btn
-// - input#zone-custom-input
-// - botones normales con: .zone-item[data-value="..."]
-// =========================
-const initZonePage = () => {
-  const saveBtn = document.querySelector(".flow-save");
+  // =========================
+  // ZONE PAGE (incluye "Otra zona" con input oculto)
+  // Requiere en zona.html:
+  // - div.zone-custom
+  // - button#zone-custom-btn
+  // - input#zone-custom-input
+  // - botones normales con: .zone-item[data-value="..."]
+  // =========================
+  const initZonePage = () => {
+    const saveBtn = document.querySelector(".flow-save");
 
-  const customWrap = document.querySelector(".zone-custom");
-  const customBtn = document.getElementById("zone-custom-btn");
-  const customInput = document.getElementById("zone-custom-input");
+    const customWrap = document.querySelector(".zone-custom");
+    const customBtn = document.getElementById("zone-custom-btn");
+    const customInput = document.getElementById("zone-custom-input");
 
-  // ✅ Solo zonas normales (las que tienen data-value)
-  const normalItems = Array.from(document.querySelectorAll(".zone-item[data-value]"));
+    // ✅ Solo zonas normales (las que tienen data-value)
+    const normalItems = Array.from(document.querySelectorAll(".zone-item[data-value]"));
 
-  if (!saveBtn || !normalItems.length) return;
+    if (!saveBtn || !normalItems.length) return;
 
-  const state = loadState();
-  let currentValue = state.zone ?? null;
+    const state = loadState();
+    let currentValue = state.zone ?? null;
 
-  const predefinedValues = normalItems
-    .map((el) => el.getAttribute("data-value"))
-    .filter(Boolean);
+    const predefinedValues = normalItems
+      .map((el) => el.getAttribute("data-value"))
+      .filter(Boolean);
 
-  const isCustomValue = (val) => !!(val && !predefinedValues.includes(val));
+    const isCustomValue = (val) => !!(val && !predefinedValues.includes(val));
 
-  // Estado visual del custom (si está abierto)
-  let customOpen = false;
+    // Estado visual del custom (si está abierto)
+    let customOpen = false;
 
-  const openCustom = (open) => {
-    customOpen = open;
+    const openCustom = (open) => {
+      customOpen = open;
 
-    if (customWrap) customWrap.classList.toggle("is-open", open);
-    if (customBtn) customBtn.classList.toggle("is-selected", open);
+      if (customWrap) customWrap.classList.toggle("is-open", open);
+      if (customBtn) customBtn.classList.toggle("is-selected", open);
 
-    if (open) {
-      customInput?.focus();
+      if (open) {
+        customInput?.focus();
+      } else {
+        // al cerrar custom, limpiamos el input (si quieres mantenerlo, quita esta línea)
+        if (customInput) customInput.value = "";
+      }
+    };
+
+    const applySelection = () => {
+      // Selección de zonas normales
+      normalItems.forEach((el) => {
+        const v = el.getAttribute("data-value");
+        const selected = !!(v && v === currentValue);
+        el.classList.toggle("is-selected", selected);
+        if (selected) el.setAttribute("aria-pressed", "true");
+        else el.removeAttribute("aria-pressed");
+      });
+
+      // Custom marcado si está abierto o si el valor guardado era custom
+      const customSelected = customOpen || isCustomValue(currentValue);
+      if (customBtn) {
+        customBtn.classList.toggle("is-selected", customSelected);
+        if (customSelected) customBtn.setAttribute("aria-pressed", "true");
+        else customBtn.removeAttribute("aria-pressed");
+      }
+      if (customWrap) customWrap.classList.toggle("is-open", customSelected);
+    };
+
+    // ✅ Precarga: si había una zona custom guardada, abrir y rellenar
+    if (customInput && isCustomValue(currentValue)) {
+      customInput.value = currentValue;
+      openCustom(true);
     } else {
-      // al cerrar custom, limpiamos el input (si quieres mantenerlo, quita esta línea)
-      if (customInput) customInput.value = "";
+      openCustom(false);
     }
-  };
 
-  const applySelection = () => {
-    // Selección de zonas normales
+    applySelection();
+
+    // Click zonas normales (toggle)
     normalItems.forEach((el) => {
-      const v = el.getAttribute("data-value");
-      const selected = !!(v && v === currentValue);
-      el.classList.toggle("is-selected", selected);
-      if (selected) el.setAttribute("aria-pressed", "true");
-      else el.removeAttribute("aria-pressed");
+      el.addEventListener("click", () => {
+        const v = el.getAttribute("data-value");
+        if (!v) return;
+
+        // toggle normal
+        currentValue = currentValue === v ? null : v;
+
+        // si eligen normal, cerrar custom
+        openCustom(false);
+
+        applySelection();
+      });
     });
 
-    // Custom marcado si está abierto o si el valor guardado era custom
-    const customSelected = customOpen || isCustomValue(currentValue);
-    if (customBtn) {
-      customBtn.classList.toggle("is-selected", customSelected);
-      if (customSelected) customBtn.setAttribute("aria-pressed", "true");
-      else customBtn.removeAttribute("aria-pressed");
-    }
-    if (customWrap) customWrap.classList.toggle("is-open", customSelected);
-  };
-
-  // ✅ Precarga: si había una zona custom guardada, abrir y rellenar
-  if (customInput && isCustomValue(currentValue)) {
-    customInput.value = currentValue;
-    openCustom(true);
-  } else {
-    openCustom(false);
-  }
-
-  applySelection();
-
-  // Click zonas normales (toggle)
-  normalItems.forEach((el) => {
-    el.addEventListener("click", () => {
-      const v = el.getAttribute("data-value");
-      if (!v) return;
-
-      // toggle normal
-      currentValue = currentValue === v ? null : v;
-
-      // si eligen normal, cerrar custom
-      openCustom(false);
-
+    // Click “Otra zona” (abre/cierra)
+    customBtn?.addEventListener("click", () => {
+      openCustom(!customOpen);
+      // si abre sin texto, currentValue queda null (ok)
+      // si ya hay texto, lo tomamos
+      const txt = customInput?.value.trim() ?? "";
+      currentValue = txt || (customOpen ? null : currentValue);
       applySelection();
     });
-  });
 
-  // Click “Otra zona” (abre/cierra)
-  customBtn?.addEventListener("click", () => {
-    openCustom(!customOpen);
-    // si abre sin texto, currentValue queda null (ok)
-    // si ya hay texto, lo tomamos
-    const txt = customInput?.value.trim() ?? "";
-    currentValue = txt || (customOpen ? null : currentValue);
-    applySelection();
-  });
+    // Escribir en el input => activa modo custom y guarda en memoria local (en currentValue)
+    customInput?.addEventListener("input", () => {
+      const txt = customInput.value.trim();
 
-  // Escribir en el input => activa modo custom y guarda en memoria local (en currentValue)
-  customInput?.addEventListener("input", () => {
-    const txt = customInput.value.trim();
+      if (txt.length > 0) {
+        // si escriben, forzamos custom abierto y valor custom
+        openCustom(true);
+        currentValue = txt;
+      } else {
+        // si borran todo, queda sin selección custom
+        currentValue = null;
+        // mantenemos abierto para que puedan seguir escribiendo si quieren
+        openCustom(true);
+      }
 
-    if (txt.length > 0) {
-      // si escriben, forzamos custom abierto y valor custom
-      openCustom(true);
-      currentValue = txt;
-    } else {
-      // si borran todo, queda sin selección custom
-      currentValue = null;
-      // mantenemos abierto para que puedan seguir escribiendo si quieren
-      openCustom(true);
-    }
+      // deselecciona normales (visual)
+      normalItems.forEach((x) => x.classList.remove("is-selected"));
+      applySelection();
+    });
 
-    // deselecciona normales (visual)
-    normalItems.forEach((x) => x.classList.remove("is-selected"));
-    applySelection();
-  });
-
-  // Guardar
-  bindOnce(saveBtn, "click", "save_zone", () => {
-    // si custom está activo, exige texto
-    if (customOpen || isCustomValue(currentValue)) {
-      const txt = customInput?.value.trim() ?? "";
-      if (!txt) {
-        alert("Escribe tu zona o código postal.");
+    // Guardar
+    bindOnce(saveBtn, "click", "save_zone", () => {
+      // si custom está activo, exige texto
+      if (customOpen || isCustomValue(currentValue)) {
+        const txt = customInput?.value.trim() ?? "";
+        if (!txt) {
+          alert("Escribe tu zona o código postal.");
+          return;
+        }
+        setState({ zone: txt });
+        window.location.href = "/pages/selector.html";
         return;
       }
-      setState({ zone: txt });
-      window.location.href = "/pages/selector.html";
-      return;
-    }
 
-    // normal / o null
-    setState({ zone: currentValue });
-    window.location.href = "/pages/selector.html";
-  });
-};
+      // normal / o null
+      setState({ zone: currentValue });
+      window.location.href = "/pages/selector.html";
+    });
+  };
 
 
 
@@ -433,6 +433,24 @@ const initZonePage = () => {
         btn.textContent = String(d);
 
         const iso = `${year}-${String(monthIndex + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+
+        const dayOfWeek = new Date(year, monthIndex, d).getDay(); // 0=Dom ... 6=Sáb
+        const isSaturday = dayOfWeek === 6;
+
+        if (isSaturday) {
+          btn.classList.add("is-disabled");
+          btn.disabled = true;
+          btn.setAttribute("aria-disabled", "true");
+
+          // Si por algún motivo estaba guardado un sábado, lo anulamos visualmente
+          if (selectedIso === iso) {
+            selectedIso = null;
+          }
+
+          grid.appendChild(btn);
+          continue; // importante: no le ponemos click
+        }
+
 
         const isToday =
           iso === `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
