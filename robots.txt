@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
 
+Disallow: /pages/
+Disallow: /scripts/
+Disallow: /css/
+Disallow: /assets/
+
 Sitemap: https://maginails.com/sitemap.xml
