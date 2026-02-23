@@ -259,6 +259,7 @@
   font-family: var(--font-type-text);
   font-size: 14px;
   display: flex;
+  padding-right: 20px;
   flex-direction: column;
   gap: 8px;
 }
